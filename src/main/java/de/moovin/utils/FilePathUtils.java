@@ -4,7 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class FilePathUtils {
   public static String getFileExtension(final String filename) {
-    return filename.substring(filename.lastIndexOf("."), filename.length());
+    return filename.substring(filename.lastIndexOf("."), filename.length()).toLowerCase();
   }
 
 
@@ -31,6 +31,22 @@ public class FilePathUtils {
     if (key.lastIndexOf("/") < 0)
       return key;
     return key.substring(key.lastIndexOf("/") + 1, key.length());
+  }
+
+
+  public static String createXMLFileName(final String filename) {
+    return filename + ".xml";
+  }
+
+
+  public static String createZipFileName(final String filename) {
+    return filename + ".zip";
+  }
+
+
+  public static String getFileExtensionOnly(final String filename) {
+
+    return getFileExtension(filename).replace(".", "");
   }
 
 }
