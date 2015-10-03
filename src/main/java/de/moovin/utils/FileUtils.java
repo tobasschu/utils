@@ -68,4 +68,9 @@ public class FileUtils {
     org.apache.commons.io.FileUtils.copyURLToFile(new URL(url), file);
     return file;
   }
+
+
+  public static String createStringFromFile(final File attachment) throws IOException {
+    return org.apache.commons.io.FileUtils.readFileToString(attachment);
+  }
 }
