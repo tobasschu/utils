@@ -8,11 +8,11 @@ import com.google.common.hash.Hashing;
 
 public class IdentifierUtils {
 
-	public static String createUniqueIdentifier(final String userId) {
-		final HashFunction sha256 = Hashing.sha256();
-		final HashCode hashString = sha256.hashString(
-				userId + String.valueOf(System.currentTimeMillis()),
-				Charset.defaultCharset());
-		return hashString.toString();
-	}
+  public static String createUniqueIdentifier(final String identifier) {
+    final HashFunction sha256 = Hashing.sha256();
+    final HashCode hashString =
+        sha256.hashString(identifier + String.valueOf(System.currentTimeMillis()),
+            Charset.defaultCharset());
+    return hashString.toString();
+  }
 }
