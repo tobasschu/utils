@@ -2,6 +2,8 @@ package de.tschumacher.utils;
 
 import java.nio.charset.Charset;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import com.google.common.hash.HashCode;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
@@ -15,4 +17,10 @@ public class IdentifierUtils {
             Charset.defaultCharset());
     return hashString.toString();
   }
+
+  public static String createIdentifier(int numberOfLetter, int numberOfNumbers) {
+    return RandomStringUtils.randomAlphabetic(numberOfLetter).toUpperCase()
+        + RandomStringUtils.randomNumeric(numberOfNumbers);
+  }
+
 }
