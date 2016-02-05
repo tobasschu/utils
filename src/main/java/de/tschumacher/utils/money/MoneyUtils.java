@@ -22,23 +22,24 @@ public class MoneyUtils {
     if (moneyList == null || moneyList.size() <= 0)
       throw new java.lang.IllegalAccessError();
 
-    final BigMoney money = BigMoney.of(moneyList.get(0).getCurrencyUnit(), 0.0);
+    BigMoney money = BigMoney.of(moneyList.get(0).getCurrencyUnit(), 0.0);
     for (final BigMoney moneyItem : moneyList) {
-      money.plus(moneyItem);
+      money = money.plus(moneyItem);
     }
     return money;
   }
+
 
   public static String toString(BigMoney money) {
     return mf.print(money.withScale(DEFAULT_SCALE, DEFAULT_ROUNDING_MODE));
   }
 
   public static BigMoney calulateNetFromGross(final BigMoney price) {
-    return price.dividedBy(1.0 + MWST, DEFAULT_ROUNDING_MODE);
+    return price.multipliedBy(1 / (1.0 + MWST));
   }
 
 
   public static BigMoney calulateMwstFromGross(final BigMoney price) {
-    return price.multipliedBy(MWST);
+    return price.minus(calulateNetFromGross(price));
   }
 }
