@@ -30,6 +30,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class FileUtils {
 
+  private static final int READ_TIMEOUT = 30 * 1000;
+  private static final int CONNECTION_TIMEOUT = 10 * 1000;
+
   public static File convertToFile(final MultipartFile file) throws IllegalStateException,
       IOException {
     final File convFile = new File(file.getOriginalFilename());
@@ -81,7 +84,8 @@ public class FileUtils {
   public static File createFileFromUrl(final String fileName, final String url) throws IOException,
       MalformedURLException {
     final File file = new File(fileName);
-    org.apache.commons.io.FileUtils.copyURLToFile(new URL(url), file);
+    org.apache.commons.io.FileUtils.copyURLToFile(new URL(url), file, CONNECTION_TIMEOUT,
+        READ_TIMEOUT);
     return file;
   }
 
