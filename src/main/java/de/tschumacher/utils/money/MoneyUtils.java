@@ -15,8 +15,7 @@ public class MoneyUtils {
   private static final Locale DEFAULT_LOCALE = Locale.GERMANY;
   private static final int DEFAULT_SCALE = 2;
 
-  private static MoneyFormatter mf = new MoneyFormatterBuilder().appendAmountLocalized()
-      .appendLiteral(" ").appendCurrencySymbolLocalized().toFormatter(DEFAULT_LOCALE);
+
 
   public static BigMoney sum(final List<BigMoney> moneyList) {
     if (moneyList == null || moneyList.size() <= 0)
@@ -29,17 +28,34 @@ public class MoneyUtils {
     return money;
   }
 
+  public static String toString(BigMoney money, Locale locale, int scale, RoundingMode roundingMode) {
+    final MoneyFormatter mf =
+        new MoneyFormatterBuilder().appendAmountLocalized().appendLiteral(" ")
+            .appendCurrencySymbolLocalized().toFormatter(locale);
+    return mf.print(money.withScale(scale, roundingMode));
+  }
 
   public static String toString(BigMoney money) {
-    return mf.print(money.withScale(DEFAULT_SCALE, DEFAULT_ROUNDING_MODE));
+    return toString(money, DEFAULT_LOCALE, DEFAULT_SCALE, DEFAULT_ROUNDING_MODE);
+  }
+
+  public static String toString(BigMoney money, Locale locale) {
+    return toString(money, locale, DEFAULT_SCALE, DEFAULT_ROUNDING_MODE);
   }
 
   public static BigMoney calulateNetFromGross(final BigMoney price) {
-    return price.multipliedBy(1 / (1.0 + MWST));
+    return calulateNetFromGross(price, MWST);
   }
 
+  public static BigMoney calulateNetFromGross(final BigMoney price, double mwst) {
+    return price.multipliedBy(1 / (1.0 + mwst));
+  }
 
   public static BigMoney calulateMwstFromGross(final BigMoney price) {
     return price.minus(calulateNetFromGross(price));
+  }
+
+  public static BigMoney calulateMwstFromGross(final BigMoney price, double mwst) {
+    return price.minus(calulateNetFromGross(price, mwst));
   }
 }
