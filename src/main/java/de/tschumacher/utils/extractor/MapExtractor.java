@@ -1,11 +1,12 @@
-package de.tschumacher.utils.converter;
+package de.tschumacher.utils.extractor;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-public class MapConverter {
-  public static <F> Map<String, F> convert(final IdExtractor<F> extractor, final List<F> fs) {
+public class MapExtractor {
+  public static <F> Map<String, F> extract(final ExtractorItem<F> extractor, final List<F> fs) {
     final Map<String, F> result = new HashMap<String, F>();
     if (fs != null) {
       for (final F f : fs) {
@@ -18,15 +19,17 @@ public class MapConverter {
     return result;
   }
 
-  public static <F> Map<String, F> convertMulti(final MultiIdExtractor<F> extractor,
+  public static <F> Map<String, F> extract(final MultiExtractorItem<F> extractor,
       final List<F> fs) {
     final Map<String, F> result = new HashMap<String, F>();
     if (fs != null) {
       for (final F f : fs) {
-        final String[] extractedIds = extractor.extract(f);
+        final Set<String> extractedIds = extractor.extract(f);
         if (extractedIds != null) {
           for (final String id : extractedIds) {
-            result.put(id, f);
+            if (id != null) {
+              result.put(id, f);
+            }
           }
         }
       }
