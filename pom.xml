@@ -1,19 +1,40 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.tschumacher</groupId>
 	<artifactId>utils</artifactId>
 	<version>0.0.7-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
+	<name>utils</name>
+	<description>A Collection of Helper Classes</description>
+	<url>https://github.com/tobasschu/utils</url>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Tobias Schumacher</name>
+			<email>tobias@tschumacher.de</email>
+		</developer>
+	</developers>
+
+
 	<properties>
 		<spring.version>4.0.5.RELEASE</spring.version>
 		<hibernate.version>4.3.5.Final</hibernate.version>
 		<jdk.version>1.7</jdk.version>
 	</properties>
+
 	<scm>
 		<connection>scm:git:git@github.com:tobasschu/utils.git</connection>
-	  <tag>HEAD</tag>
-  </scm>
+		<url>https://github.com/tobasschu/utils.git</url>
+	</scm>
 
 
 	<distributionManagement>
@@ -109,6 +130,32 @@
 						<phase>verify</phase>
 						<goals>
 							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
 						</goals>
 					</execution>
 				</executions>
