@@ -146,4 +146,38 @@ public class MapExtractorTest {
     assertEquals(inputList.get(2), convertedMap.get(inputList.get(2).toArray()[1]));
   }
 
+
+
+  @Test
+  public void defaultExtractListTest() {
+    final List<String> inputList = new ArrayList<String>(Arrays.asList("1", "1", "1"));
+
+    final Map<String, List<String>> convertedMap =
+        MapExtractor.extractList(this.extractorItem, inputList);
+
+    assertNotNull(convertedMap);
+    assertEquals(1, convertedMap.size());
+    assertEquals(3, convertedMap.get(inputList.get(0)).size());
+    assertEquals(inputList.get(0), convertedMap.get(inputList.get(0)).get(0));
+    assertEquals(inputList.get(1), convertedMap.get(inputList.get(0)).get(1));
+    assertEquals(inputList.get(2), convertedMap.get(inputList.get(0)).get(2));
+  }
+
+
+  @Test
+  public void multiExtractListTest() {
+
+    final List<Set<String>> inputList =
+        new ArrayList<Set<String>>(Arrays.asList(new HashSet<String>(Arrays.asList("1", "2")),
+            new HashSet<String>(Arrays.asList("1", "2")),
+            new HashSet<String>(Arrays.asList("1", "2"))));
+
+    final Map<String, List<Set<String>>> convertedMap =
+        MapExtractor.extractList(this.multiExtractorItem, inputList);
+
+    assertNotNull(convertedMap);
+    assertEquals(2, convertedMap.size());
+    assertEquals(3, convertedMap.get("1").size());
+    assertEquals(3, convertedMap.get("2").size());
+  }
 }
