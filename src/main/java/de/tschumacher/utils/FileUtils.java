@@ -1,11 +1,11 @@
 /*
  * Copyright 2015 Tobias Schumacher
- *
+ * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
- *
+ * 
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software distributed under the License
  * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
  * or implied. See the License for the specific language governing permissions and limitations under
@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -29,9 +30,11 @@ public class FileUtils {
   private static final int READ_TIMEOUT = 30 * 1000;
   private static final int CONNECTION_TIMEOUT = 10 * 1000;
 
-  public static File convertToFile(final MultipartFile file) throws IllegalStateException,
-  IOException {
-    final File convFile = new File(file.getOriginalFilename());
+  public static File convertToFile(final String path, final MultipartFile file)
+      throws IllegalStateException, IOException {
+    final String filename = file.getOriginalFilename();
+    final String filepath = Paths.get(path, filename).toString();
+    final File convFile = new File(filepath);
     file.transferTo(convFile);
     return convFile;
   }
@@ -53,7 +56,7 @@ public class FileUtils {
 
 
   public static File createFileFromUrl(final String fileName, final String url) throws IOException,
-  MalformedURLException {
+      MalformedURLException {
     final File file = new File(fileName);
     org.apache.commons.io.FileUtils.copyURLToFile(new URL(url), file, CONNECTION_TIMEOUT,
         READ_TIMEOUT);
